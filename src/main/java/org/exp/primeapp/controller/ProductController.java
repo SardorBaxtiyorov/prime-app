@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.exp.primeapp.utils.Const.*;
+
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping(API + V1 + AUTH + PRODUCT)
 public class ProductController {
     private final ProductService productService;
 
@@ -31,19 +33,19 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/admin")
+    @GetMapping(ADMIN)
     public ResponseEntity<List<Product>> getAdminProducts() {
         List<Product> products = productService.getAdminProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @PostMapping("/admin")
+    @PostMapping(ADMIN)
     public ResponseEntity<Product> addProduct(@RequestBody ProductReq productReq) {
         productService.saveProduct(productReq);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping(ADMIN + INACTIVE +  "/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
         productService.updateProduct(id);
         return new ResponseEntity<>(HttpStatus.OK);
